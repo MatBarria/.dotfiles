@@ -1,0 +1,21 @@
+# Git aliases
+alias gs='git status'
+alias glog='git log --oneline --graph --all --decorate'
+
+# Lpc aliases
+alias lpc9='ssh -Y mbarrial@cmslpc-el9.fnal.gov'
+alias lpc-port='ssh -L localhost:8888:localhost:8888 mbarrial@cmslpc-el9.fnal.gov'
+alias vpn='/opt/cisco/anyconnect/bin/vpnui'
+alias mount-lpc='bash ~/projects/cms-configs/mount-lpc.sh'
+ 
+# Lxplus aliases
+alias lxplus='ssh -y mbarrial@lxplus.cern.ch'
+
+# Quality of life aliases
+alias nvim='/snap/nvim/current/usr/bin/nvim'
+
+# Set up root.
+source /home/truga/software/root/bin/thisroot.sh
+
+# Created by `pipx` on 2025-04-20 16:37:15
+export PATH="$PATH:/home/truga/.local/bin"
