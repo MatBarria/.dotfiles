@@ -1,0 +1,7 @@
+[user]
+	name = MatBarria
+	email = mat.barrial@gmail.com
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim -f

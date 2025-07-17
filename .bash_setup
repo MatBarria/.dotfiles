@@ -6,10 +6,11 @@ alias glog='git log --oneline --graph --all --decorate'
 alias lpc9='ssh -Y mbarrial@cmslpc-el9.fnal.gov'
 alias lpc-port='ssh -L localhost:8888:localhost:8888 mbarrial@cmslpc-el9.fnal.gov'
 alias vpn='/opt/cisco/anyconnect/bin/vpnui'
-alias mount-lpc='bash ~/projects/cms-configs/mount-lpc.sh'
+alias mount-lpc='bash ~/.dotfiles/.local/scripts/mount-lpc.sh'
  
 # Lxplus aliases
-alias lxplus='ssh -y mbarrial@lxplus.cern.ch'
+alias lxplus='ssh -Y mbarrial@lxplus.cern.ch'
+alias mount-lxplus='bash ~/.dotfiles/.local/scripts/mount-lxplus.sh'
 
 # Quality of life aliases
 alias nvim='/snap/nvim/current/usr/bin/nvim'
