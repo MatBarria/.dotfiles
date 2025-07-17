@@ -249,7 +249,7 @@ client.background        $base
 # Swap Caplock and esc
 exec_always setxkbmap -option caps:swapescape
 # Load second monitor
-exec_always --no-startup-id ~/.dotfiles/.screen_setup.sh
+exec_always --no-startup-id $(HOME)/.local/scripts/screen_setup.sh
 # Each time this is reload will set a random wallpaper
 exec_always feh --randomize --bg-fill ~/Pictures/wallpapers/*
 # move focused workspace between monitors
@@ -270,7 +270,7 @@ for_window [class="firefox_firefox"] border pixel 2
 # Use gnome network manager
 exec --no-startup-id nm-applet
 # Use polybar
-exec_always --no-startup-id $HOME/.dotfiles/scripts/launch-polybar.sh
+exec_always --no-startup-id $HOME/.local/scripts/launch-polybar.sh
 # move focused workspace between monitors
 bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left
