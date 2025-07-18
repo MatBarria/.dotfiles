@@ -251,7 +251,7 @@ exec_always --no-startup-id $HOME/.local/scripts/launch-polybar.sh
 # Swap Caplock and esc
 exec_always setxkbmap -option caps:swapescape
 # Load second monitor
-exec_always --no-startup-id $(HOME)/.local/scripts/screen_setup.sh
+exec_always --no-startup-id $HOME/.local/scripts/screen_setup.sh
 # Each time this is reload will set a random wallpaper
 exec_always feh --randomize --bg-fill ~/Pictures/wallpapers/*
 # move focused workspace between monitors
