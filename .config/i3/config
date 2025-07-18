@@ -246,6 +246,8 @@ client.background        $base
     #}
 #}
 
+# Use polybar
+exec_always --no-startup-id $HOME/.local/scripts/launch-polybar.sh
 # Swap Caplock and esc
 exec_always setxkbmap -option caps:swapescape
 # Load second monitor
@@ -269,8 +271,6 @@ for_window [class="firefox_firefox"] border pixel 2
 
 # Use gnome network manager
 exec --no-startup-id nm-applet
-# Use polybar
-exec_always --no-startup-id $HOME/.local/scripts/launch-polybar.sh
 # move focused workspace between monitors
 bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left

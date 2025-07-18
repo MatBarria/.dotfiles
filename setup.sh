@@ -1,28 +1,13 @@
 #!/usr/bin/env bash
 
+set -e
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+echo "$script_dir"
 
-if [ -z "$DEV_ENV" ]; then
-    echo "env var DEV_ENV needs to be present"
-    exit 1
-fi
-
-# if i just did DEV_ENV=$(pwd) ./run then this is needed for the rest of the
-# scripts
-export DEV_ENV="$DEV_ENV"
-
-grep=""
 dry_run="0"
-
-while [[ $# -gt 0 ]]; do
-    echo "ARG: \"$1\""
-    if [[ "$1" == "--dry" ]]; then
-        dry_run="1"
-    else
-        grep="$1"
-    fi
-    shift
-done
+if [[ "$1" == "--dry" ]]; then
+    dry_run="1"
+fi
 
 log() {
     if [[ $dry_run == "1" ]]; then
@@ -32,67 +17,64 @@ log() {
     fi
 }
 
-log "RUN: env: $env -- grep: $grep"
-
-runs_dir=`find $script_dir/runs -mindepth 1 -maxdepth 1 -executable`
-
-for s in $runs_dir; do
-    if basename $s | grep -vq "$grep"; then
-        log "grep \"$grep\" filtered out $s"
-        continue
-    fi
-
-    log "running script: $s"
-
-    if [[ $dry_run == "0" ]]; then
-        $s
-    fi
-done
-
-remove_files() {
-    pushd $1
+update_files() {
+    pushd "$1" > /dev/null
     (
-        configs=`find . -mindepth 1 -maxdepth 1 -type d`
-        if [[ $dry_run == "1" ]]; then
-            echo "[DRY_RUN]: removing: $configs"
-        else
-            echo "removing: $configs"
-        fi
+        configs=$(find . -mindepth 1 -maxdepth 1 -type d)
 
         for c in $configs; do
-            directory=${2%/}/${c}
+            directory="${2%/}/${c}"
             if [[ $dry_run == "1" ]]; then
-                echo "[DRY_RUN]:    removing: $directory"
+                log "Removing: $directory"
             else
-                echo "    removing: $directory"
-                rm -rf $directory
+                log "Removing: $directory"
+                rm -rf "$directory"
             fi
         done
 
         if [[ $dry_run == "1" ]]; then
-            echo "copying env: $2"
+            log "Copying contents of $(realpath .) to $2"
+            find . -type f | while read -r f; do
+                log "Would copy: $f → $2"
+            done
         else
-            echo "copying env: $2"
-            cp -r ./* $2
+            log "Copying contents of $(realpath .) to $2"
+            find . -type f | while read -r f; do
+                rel_path="${f#./}"
+                log "Copying: $f → $2/$rel_path"
+            done
+            cp -vr . "$2"
         fi
     )
-    popd
+    popd > /dev/null
 }
 
 run_env() {
-    pushd $script_dir
-    echo "removing ~config"
-    remove_files env/.config $XDG_CONFIG_HOME
+    pushd "$script_dir" > /dev/null
 
-    echo "removing ~local"
-    remove_files env/.local $HOME/.local
+    log "Updating ~/.config"
+    update_files .config "$HOME/.config"
 
-    echo "copying zsh"
+    log "Updating ~/.local"
+    update_files .local "$HOME/.local"
+
+    log "Copying home files"
     if [[ $dry_run == "0" ]]; then
-        cp $script_dir/env/.zshrc ~/.zshrc
-        cp $script_dir/env/.zsh_profile ~/.zsh_profile
+        for file in .bash_setup .gitconfig .tmux.conf; do
+            src="$script_dir/env/$file"
+            dest="$HOME/$file"
+            log "Copying: $src → $dest"
+            cp -v "$src" "$dest"
+        done
+    else
+        for file in .bash_profile .gitconfig .tmux.conf; do
+            src="$script_dir/env/$file"
+            dest="$HOME/$file"
+            log "Would copy: $src → $dest"
+        done
     fi
 
-    popd
+    popd > /dev/null
 }
 
+run_env
