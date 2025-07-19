@@ -274,3 +274,5 @@ exec --no-startup-id nm-applet
 # move focused workspace between monitors
 bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left
+# Open the new windows nicelly (like a ladder)
+exec_always  $HOME/.config/i3/scripts/autotiling
