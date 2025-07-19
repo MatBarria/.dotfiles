@@ -1,5 +1,6 @@
 sudo apt -y update
- 
+
+sudo apt install xclip
 sudo apt install i3
 sudo apt install feh
 sudo apt install pulseaudio-utils pavucontrol
