@@ -44,3 +44,4 @@
 theme = catppuccin-mocha
 shell-integration-features = no-title
 gtk-titlebar = false
+font-family = "Ubuntu Mono"
