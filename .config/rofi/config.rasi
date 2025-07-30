@@ -56,11 +56,80 @@
   alternate-active-foreground: @blue;
 
 }
+configuration {
+	/*---------- General setting ----------*/
+	modi: "drun,run,filebrowser,window";
+	case-sensitive: false;
+	cycle: true;
+	filter: "";
+	scroll-method: 0;
+	normalize-match: true;
+	show-icons: true;
+	icon-theme: "Papirus";
+/*	cache-dir: ;*/
+	steal-focus: false;
+
+	/*---------- Drun settings ----------*/
+	drun-categories: "";
+	drun-match-fields: "name,generic,exec,categories,keywords";
+	drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+	drun-show-actions: false;
+	drun-url-launcher: "xdg-open";
+	drun-use-desktop-cache: false;
+	drun-reload-desktop-cache: false;
+	drun {
+		/** Parse user desktop files. */
+		parse-user:   true;
+		/** Parse system desktop files. */
+		parse-system: true;
+    }
+
+	/*---------- History and Sorting ----------*/
+	disable-history: false;
+	sorting-method: "normal";
+	max-history-size: 25;
+
+	/*---------- Display setting ----------*/
+	display-window: "Windows";
+	display-windowcd: "Window CD";
+	display-run: "Run";
+	display-ssh: "SSH";
+	display-drun: "Apps";
+	display-keys: "Keys";
+	display-filebrowser: "Files";
+
+	/*---------- Misc setting ----------*/
+	terminal: "rofi-sensible-terminal";
+	font: "Mono 12";
+	sort: false;
+	threads: 0;
+	click-to-exit: true;
+/*	ignored-prefixes: "";*/
+/*	pid: "/run/user/1000/rofi.pid";*/
+
+	/*---------- File browser settings ----------*/
+    filebrowser {
+	  directory: "~";
+      directories-first: true;
+      sorting-method:    "name";
+    }
+
+	/*---------- Other settings ----------*/
+    timeout {
+      action: "kb-cancel";
+      delay:  0;
+    }
+}
+
 element {
-    padding: 1px ;
-    cursor:  pointer;
-    spacing: 5px ;
-    border:  0;
+    enabled:                     true;
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @border-color;
+    background-color:            transparent;
+    text-color:                  @normal-foreground;
+    cursor:                      pointer;
 }
 element normal.normal {
     background-color: @normal-background;
@@ -99,10 +168,11 @@ element alternate.active {
     text-color:       @alternate-active-foreground;
 }
 element-text {
-    background-color: transparent;
-    cursor:           inherit;
-    highlight:        inherit;
-    text-color:       inherit;
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
 }
 element-icon {
     background-color: transparent;
@@ -111,24 +181,41 @@ element-icon {
     text-color:       inherit;
 }
 window {
-    padding:          5;
-    background-color: @background;
-    border:           1;
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       900px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+    margin:                      0px;
+    padding:                     10px;
+    border:                      2px solid;
+    border-radius:               5px;
+    border-color:                @border-color;
+    cursor:                      "default";
+    background-color:            @background;
 }
 mainbox {
     padding: 0;
     border:  0;
 }
 message {
-    padding:      1px ;
-    border-color: @separatorcolor;
-    border:       2px dash 0px 0px ;
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @selected-active-background;
+    background-color:            @background-color;
+    text-color:                  @foreground;
 }
 textbox {
     text-color: @foreground;
 }
 listview {
     padding:      2px 0px 0px ;
+    lines: 12;
     scrollbar:    true;
     border-color: @separatorcolor;
     spacing:      2px ;
