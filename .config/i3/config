@@ -277,4 +277,4 @@ bindsym $mod+Ctrl+less move workspace to output left
 exec_always  ./.config/i3/scripts/autotiling
 
 # Load second monitor
-exec_always --no-startup-id $HOME/.local/scripts/screen_setup.sh
+exec_always  $HOME/.local/scripts/screen_setup.sh
