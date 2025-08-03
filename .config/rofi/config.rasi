@@ -109,7 +109,7 @@ configuration {
 
 	/*---------- File browser settings ----------*/
     filebrowser {
-	  directory: "~";
+	  directory: "/home/truga";
       directories-first: true;
       sorting-method:    "name";
     }

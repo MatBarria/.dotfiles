@@ -267,6 +267,7 @@ for_window [class="org.gnome.Nautilus"] move to workspace $ws10
 for_window [class="firefox_firefox"] border pixel 2
 # open ROOT as floating
 for_window [class="ROOT"] floating enable
+for_window [class="Pavucontrol"] floating enable
 
 # Use gnome network manager
 exec --no-startup-id nm-applet
