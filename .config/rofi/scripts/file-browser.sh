@@ -1,49 +1,49 @@
 #!/bin/bash
 
-#fdfind . ~/projects ~/Documents ~/Downloads/ ~/Pictures \
-  #--type f \
-  #--exclude .git \
-  #--exclude node_modules \
-  #--exclude build \
-  #--exclude .cache \
-  #--exclude "*.root" \
-  #2>/dev/null | \
-#awk '{
-  #if ($0 ~ /\.pdf$/) icon="📄";
-  #else if ($0 ~ /\.png$|\.jpg$|\.jpeg$/) icon="🖼️";
-  #else if ($0 ~ /\.root$/) icon="🧪";
-  #else if ($0 ~ /\.py$/) icon="🐍";
-  #else icon="📁";
-  #print icon " " $0
-#}' | \
-#rofi -dmenu -i -markup-rows -p "Files" -show-icons | \
-#sed 's/^[^ ]* //' | \
-#xargs -r xdg-open
-
-#!/bin/bash
-
 tmpfile=$(mktemp)
+(
+  fdfind . ~/projects ~/documents ~/downloads/ ~/pictures \
+    --type f \
+    -e pdf \
+    --exclude .git \
+    --exclude node_modules \
+    --exclude build \
+    --exclude .cache \
+    --exclude "*.root" \
 
-fdfind . ~/projects ~/Documents ~/Downloads/ ~/Pictures \
-  --type f \
-  --exclude .git \
-  --exclude node_modules \
-  --exclude build \
-  --exclude .cache \
-  --exclude "*.root" \
-  2>/dev/null | \
+  fdfind . ~/projects ~/documents ~/downloads/ ~/pictures \
+    --type f \
+    --exclude .git \
+    --exclude node_modules \
+    --exclude build \
+    --exclude .cache \
+    --exclude "*.root" \
+    --exclude "*.pdf"
+) 2>/dev/null | \
 awk -F/ '
 {
   full=$0
   name=$NF
 
+  # build short context (last 1–2 folders)
+  n=NF
+  if (n > 2) {
+    context=$(NF-2) "/" $(NF-1)
+  } else if (n > 1) {
+    context=$(NF-1)
+  } else {
+    context="."
+  }
+
+  # icons
   if (name ~ /\.pdf$/) icon="📄";
   else if (name ~ /\.(png|jpg|jpeg)$/) icon="🖼️";
   else if (name ~ /\.root$/) icon="🧪";
   else if (name ~ /\.py$/) icon="🐍";
   else icon="📁";
 
-  shown=icon " " name
+  shown=icon " " name "   [" context "]"
+
   print shown "\t" full
 }' > "$tmpfile"
 
