@@ -1,41 +1,59 @@
 #!/bin/bash
 
-# Font with Nerd Fonts icons required, e.g., "JetBrainsMono Nerd Font"
-ICON_WEAK="󰤟"     # low signal
-ICON_MEDIUM="󰤢"   # medium signal
-ICON_STRONG="󰤥"   # stronger, but same icon
-ICON_FULL="󰤨"     # full (you can customize further)
+ICON_WEAK="󰤟"
+ICON_MEDIUM="󰤢"
+ICON_STRONG="󰤥"
+ICON_FULL="󰤨"
 
-# Collect SSID and SIGNAL
-mapfile -t networks < <(nmcli -t -f SSID,SIGNAL device wifi list | grep -v '^:' | grep -v '^$' | sort -u)
+tmpfile=$(mktemp)
+trap 'rm -f "$tmpfile"' EXIT
 
-options=()
+mapfile -t networks < <(
+    nmcli --terse --fields SSID,SIGNAL,SECURITY device wifi list --rescan no | \
+    awk -F: 'NF && $1 != ""' | \
+    sort -t: -k2,2nr | \
+    awk -F: '!seen[$1]++'
+)
 
 for net in "${networks[@]}"; do
-    ssid="${net%%:*}"
-    signal="${net##*:}"
+    ssid=${net%%:*}
+    rest=${net#*:}
+    signal=${rest%%:*}
+    security=${rest#*:}
 
-    # Choose icon
     if [ "$signal" -ge 80 ]; then
-        icon=$ICON_FULL
+        icon="$ICON_FULL"
     elif [ "$signal" -ge 60 ]; then
-        icon=$ICON_STRONG
+        icon="$ICON_STRONG"
     elif [ "$signal" -ge 40 ]; then
-        icon=$ICON_MEDIUM
+        icon="$ICON_MEDIUM"
     else
-        icon=$ICON_WEAK
+        icon="$ICON_WEAK"
     fi
 
-    options+=("$icon  $ssid")
+    if [ -n "$security" ]; then
+        label="$icon  $ssid  [secured]"
+    else
+        label="$icon  $ssid  [open]"
+    fi
+
+    printf '%s\t%s\t%s\n' "$label" "$ssid" "$security" >> "$tmpfile"
 done
 
-# Show Rofi menu
-chosen=$(printf '%s\n' "${options[@]}" | rofi -dmenu -i -p "WiFi Networks" -no-show-icons)
+chosen=$(cut -f1 "$tmpfile" | rofi -dmenu -i -p "WiFi")
 
-# Extract the SSID (remove icon and whitespace)
-ssid=$(echo "$chosen" | cut -d' ' -f2-)
+[ -z "$chosen" ] && exit
 
-if [ -n "$ssid" ]; then
-    password=$(rofi -dmenu -p "Enter WiFi password for $ssid" -no-show-icons)
-    nmcli device wifi connect "$ssid" password $password
+line=$(grep -F -m1 "$chosen" "$tmpfile")
+ssid=$(printf '%s\n' "$line" | cut -f2)
+
+# First try without password: works for open or saved networks
+if nmcli device wifi connect "$ssid" >/dev/null 2>&1; then
+    exit
 fi
+
+# If that fails, ask for password
+password=$(rofi -dmenu -password -p "Password for $ssid")
+[ -z "$password" ] && exit
+
+nmcli device wifi connect "$ssid" password "$password"
