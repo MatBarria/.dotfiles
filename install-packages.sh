@@ -9,6 +9,7 @@ sudo apt install rofi
 sudo apt install xrandr 
 sudo apt install polybar
 sudo apt install flameshot
+sudo apt install fd-find
 sudo apt install meson \
     python-gi-dev \
     python-dbus-dev \
