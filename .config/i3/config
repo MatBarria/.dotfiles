@@ -245,7 +245,8 @@ client.background        $base
         #urgent_workspace   $base  $red      $crust
     #}
 #}
-
+# Use picom
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 # Use polybar
 exec_always --no-startup-id $HOME/.local/scripts/launch-polybar.sh
 # Swap Caplock and esc
@@ -261,12 +262,15 @@ bindsym Print exec --no-startup-id flameshot gui
 exec_always "setxkbmap -model pc104 -layout us,es -variant ,, -option grp:win_space_toggle"
 
 # Assing applications to specific workspaces
+
 for_window [class="Slack"] move to workspace $ws8 
+for_window [class="Mattermost"] move to workspace $ws8 
 for_window [class="org.gnome.Nautilus"] move to workspace $ws10 
 # Remove bar on thor of interner browser
 for_window [class="firefox_firefox"] border pixel 2
 # open ROOT as floating
-for_window [class="ROOT"] floating enable
+#for_window [class="ROOT"] floating enable
+for_window [instance="Browser" class="ROOT"] floating enable, resize set 1200 800
 for_window [class="Pavucontrol"] floating enable
 
 # Use gnome network manager

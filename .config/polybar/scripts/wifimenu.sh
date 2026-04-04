@@ -37,5 +37,5 @@ ssid=$(echo "$chosen" | cut -d' ' -f2-)
 
 if [ -n "$ssid" ]; then
     password=$(rofi -dmenu -p "Enter WiFi password for $ssid" -no-show-icons)
-    nmcli device wifi connect "$ssid" password "$password"
+    nmcli device wifi connect "$ssid" password $password
 fi
