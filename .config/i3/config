@@ -64,6 +64,8 @@ bindsym $mod+Shift+q kill
 # start dmenu (a program launcher)
 #bindsym $mod+d exec --no-startup-id dmenu_run
 bindsym $mod+d exec rofi -show drun -show-icons
+bindsym $mod+g exec ~/.config/rofi/scripts/search.sh
+bindsym $mod+y exec ~/.config/rofi/scripts/search-YT.sh
 bindsym $mod+f exec ~/.config/rofi/scripts/file-browser.sh
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
@@ -110,7 +112,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+f floating toggle
 
 # change focus between tiling / floating windows
 #bindsym $mod+space focus mode_toggle
@@ -123,8 +125,8 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1 Firefox"
-set $ws2 "2 Firefox 2nd"
+set $ws1 "1 Browser"
+set $ws2 "2 2nd"
 set $ws3 "3 Terminal"
 set $ws4 "4"
 set $ws5 "5"
@@ -229,7 +231,6 @@ client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
 client.background        $base
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-
 #bar {
     #status_command i3status -c ~/.config/i3status/i3status.conf
     #i3bar_command i3bar --transparency
@@ -264,6 +265,7 @@ exec_always "setxkbmap -model pc104 -layout us,es -variant ,, -option grp:win_sp
 # Assing applications to specific workspaces
 
 for_window [class="Slack"] move to workspace $ws8 
+#for_window [class="firefox_firefox"] move to workspace $ws2 
 for_window [class="Mattermost"] move to workspace $ws8 
 for_window [class="org.gnome.Nautilus"] move to workspace $ws10 
 # Remove bar on thor of interner browser
@@ -272,7 +274,7 @@ for_window [class="firefox_firefox"] border pixel 2
 #for_window [class="ROOT"] floating enable
 for_window [instance="Browser" class="ROOT"] floating enable, resize set 1200 800
 for_window [class="Pavucontrol"] floating enable
-
+for_window [class="Gthumb"] floating enable
 # Use gnome network manager
 exec --no-startup-id nm-applet
 # move focused workspace between monitors

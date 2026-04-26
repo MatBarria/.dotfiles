@@ -2,7 +2,7 @@
 
 tmpfile=$(mktemp)
 (
-  fdfind . ~/projects ~/documents ~/downloads/ ~/pictures \
+  fdfind . ~/projects ~/Documents ~/Downloads/ ~/Pictures \
     --type f \
     -e pdf \
     --exclude .git \
@@ -10,15 +10,6 @@ tmpfile=$(mktemp)
     --exclude build \
     --exclude .cache \
     --exclude "*.root" \
-
-  fdfind . ~/projects ~/documents ~/downloads/ ~/pictures \
-    --type f \
-    --exclude .git \
-    --exclude node_modules \
-    --exclude build \
-    --exclude .cache \
-    --exclude "*.root" \
-    --exclude "*.pdf"
 ) 2>/dev/null | \
 awk -F/ '
 {
@@ -53,6 +44,10 @@ choice=$(cut -f1 "$tmpfile" | rofi -dmenu -i -p "Files")
 
 filepath=$(grep -F "$choice" "$tmpfile" | head -n1 | cut -f2-)
 
-[ -n "$filepath" ] && xdg-open "$filepath" >/dev/null 2>&1 &
+[ -n "$filepath" ] && {
+    xdg-open "$filepath" >/dev/null 2>&1 &
+    sleep 0.4
+    i3-msg '[class="firefox"] focus'
+}
 
 rm -f "$tmpfile"
