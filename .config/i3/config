@@ -63,7 +63,7 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec --no-startup-id dmenu_run
-bindsym $mod+d exec rofi -show drun -show-icons
+bindsym $mod+d exec ~/.config/rofi/scripts/drun.sh
 bindsym $mod+g exec ~/.config/rofi/scripts/search.sh
 bindsym $mod+y exec ~/.config/rofi/scripts/search-YT.sh
 bindsym $mod+f exec ~/.config/rofi/scripts/file-browser.sh
@@ -249,7 +249,7 @@ client.background        $base
 # Use picom
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 # Use polybar
-exec_always --no-startup-id $HOME/.local/scripts/launch-polybar.sh
+#exec_always --no-startup-id $HOME/.local/scripts/launch-polybar.sh
 # Swap Caplock and esc
 exec_always setxkbmap -option caps:swapescape
 # Each time this is reload will set a random wallpaper
@@ -273,6 +273,8 @@ for_window [class="firefox_firefox"] border pixel 2
 # open ROOT as floating
 #for_window [class="ROOT"] floating enable
 for_window [instance="Browser" class="ROOT"] floating enable, resize set 1200 800
+for_window [instance="Canvas" class="ROOT"] floating enable, resize set 1200 800
+
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Gthumb"] floating enable
 # Use gnome network manager

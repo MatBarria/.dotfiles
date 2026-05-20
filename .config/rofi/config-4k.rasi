@@ -1,0 +1,284 @@
+* {
+  rosewater: #f5e0dc;
+  flamingo: #f2cdcd;
+  pink: #f5c2e7;
+  mauve: #cba6f7;
+  red: #f38ba8;
+  maroon: #eba0ac;
+  peach: #fab387;
+  yellow: #f9e2af;
+  green: #a6e3a1;
+  teal: #94e2d5;
+  sky: #89dceb;
+  sapphire: #74c7ec;
+  blue: #89b4fa;
+  lavender: #b4befe;
+  text: #cdd6f4;
+  subtext1: #bac2de;
+  subtext0: #a6adc8;
+  overlay2: #9399b2;
+  overlay1: #7f849c;
+  overlay0: #6c7086;
+  surface2: #585b70;
+  surface1: #45475a;
+  surface0: #313244;
+  base: #1e1e2e;
+  mantle: #181825;
+  crust: #11111b;
+}
+
+* {
+  selected-active-foreground:  @background;
+  lightfg:                     @text;
+  separatorcolor:              @foreground;
+  urgent-foreground:           @red;
+  alternate-urgent-background: @lightbg;
+  lightbg:                     @mantle;
+  background-color:            transparent;
+  border-color:                @foreground;
+  normal-background:           @background;
+  selected-urgent-background:  @red;
+  alternate-active-background: @lightbg;
+  spacing:                     4; /* Scaled from 2 */
+  alternate-normal-foreground: @foreground;
+  urgent-background:           @background;
+  selected-normal-foreground:  @lightbg;
+  active-foreground:           @blue;
+  background:                  @base;
+  selected-active-background:  @blue;
+  active-background:           @background;
+  selected-normal-background:  @lightfg;
+  alternate-normal-background: @lightbg;
+  foreground:                  @text;
+  selected-urgent-foreground:  @background;
+  normal-foreground:           @foreground;
+  alternate-urgent-foreground: @red;
+  alternate-active-foreground: @blue;
+
+}
+configuration {
+    /*---------- General setting ----------*/
+    modi: "drun,run,filebrowser,window";
+    case-sensitive: false;
+    cycle: true;
+    filter: "";
+    scroll-method: 0;
+    normalize-match: true;
+    show-icons: true;
+    icon-theme: "Papirus";
+/*    cache-dir: ;*/
+    steal-focus: false;
+
+    /*---------- Drun settings ----------*/
+    drun-categories: "";
+    drun-match-fields: "name,generic,exec,categories,keywords";
+    drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+    drun-show-actions: false;
+    drun-url-launcher: "xdg-open";
+    drun-use-desktop-cache: false;
+    drun-reload-desktop-cache: false;
+    drun {
+        /** Parse user desktop files. */
+        parse-user:   true;
+        /** Parse system desktop files. */
+        parse-system: true;
+    }
+
+    /*---------- History and Sorting ----------*/
+    disable-history: false;
+    sorting-method: "normal";
+    max-history-size: 25;
+
+    /*---------- Display setting ----------*/
+    display-window: "Windows";
+    display-windowcd: "Window CD";
+    display-run: "Run";
+    display-ssh: "SSH";
+    display-drun: "Apps";
+    display-keys: "Keys";
+    display-filebrowser: "Files";
+
+    /*---------- Misc setting ----------*/
+    terminal: "rofi-sensible-terminal";
+    font: "Mono 24"; /* Scaled from 12 */
+    sort: false;
+    threads: 0;
+    click-to-exit: true;
+/*    ignored-prefixes: "";*/
+/*    pid: "/run/user/1000/rofi.pid";*/
+
+    /*---------- File browser settings ----------*/
+    filebrowser {
+      directory: "/home/truga";
+      directories-first: true;
+      sorting-method:    "name";
+    }
+
+    /*---------- Other settings ----------*/
+    timeout {
+      action: "kb-cancel";
+      delay:  0;
+    }
+}
+
+element {
+    enabled:                     true;
+    padding:                     20px; /* Scaled from 10px */
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @border-color;
+    background-color:            transparent;
+    text-color:                  @normal-foreground;
+    cursor:                      pointer;
+}
+element normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+element normal.urgent {
+    background-color: @urgent-background;
+    text-color:       @urgent-foreground;
+}
+element normal.active {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+element selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+element selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-urgent-foreground;
+}
+element selected.active {
+    background-color: @selected-active-background;
+    text-color:       @selected-active-foreground;
+}
+element alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+element alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @alternate-urgent-foreground;
+}
+element alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @alternate-active-foreground;
+}
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+element-icon {
+    background-color: transparent;
+    size:             1.0000em; /* Left as em, will scale with Mono 24 */
+    cursor:           inherit;
+    text-color:       inherit;
+}
+window {
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       1800px; /* Scaled from 900px */
+    x-offset:                    0px;
+    y-offset:                    0px;
+    margin:                      0px;
+    padding:                     20px; /* Scaled from 10px */
+    border:                      4px solid; /* Scaled from 2px */
+    border-radius:               10px; /* Scaled from 5px */
+    border-color:                @border-color;
+    cursor:                      "default";
+    background-color:            @background;
+}
+mainbox {
+    padding: 0;
+    border:  0;
+}
+message {
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     20px; /* Scaled from 10px */
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @selected-active-background;
+    background-color:            @background-color;
+    text-color:                  @foreground;
+}
+textbox {
+    text-color: @foreground;
+}
+listview {
+    padding:      4px 0px 0px ; /* Scaled from 2px */
+    lines: 12;
+    scrollbar:    true;
+    border-color: @separatorcolor;
+    spacing:      4px ; /* Scaled from 2px */
+    fixed-height: 0;
+    border:       4px dash 0px 0px ; /* Scaled from 2px */
+}
+scrollbar {
+    width:        8px ; /* Scaled from 4px */
+    padding:      0;
+    handle-width: 16px ; /* Scaled from 8px */
+    border:       0;
+    handle-color: @normal-foreground;
+}
+sidebar {
+    border-color: @separatorcolor;
+    border:       4px dash 0px 0px ; /* Scaled from 2px */
+}
+button {
+    cursor:     pointer;
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+button selected {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+num-filtered-rows {
+    expand:     false;
+    text-color: Gray;
+}
+num-rows {
+    expand:     false;
+    text-color: Gray;
+}
+textbox-num-sep {
+    expand:     false;
+    str:        "/";
+    text-color: Gray;
+}
+inputbar {
+    padding:    2px ; /* Scaled from 1px */
+    spacing:    0px ;
+    text-color: @normal-foreground;
+    children:   [ "prompt","textbox-prompt-colon","entry","num-filtered-rows","textbox-num-sep","num-rows","case-indicator" ];
+}
+case-indicator {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+entry {
+    text-color:        @normal-foreground;
+    cursor:            text;
+    spacing:           0;
+    placeholder-color: Gray;
+    placeholder:       "Type to filter";
+}
+prompt {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+textbox-prompt-colon {
+    margin:     0px 0.3000em 0.0000em 0.0000em ; /* Left as em, will scale naturally */
+    expand:     false;
+    str:        ":";
+    text-color: inherit;
+}
