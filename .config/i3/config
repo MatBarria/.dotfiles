@@ -276,7 +276,14 @@ for_window [instance="Browser" class="ROOT"] floating enable, resize set 1200 80
 for_window [instance="Canvas" class="ROOT"] floating enable, resize set 1200 800
 
 for_window [class="Pavucontrol"] floating enable
-for_window [class="Gthumb"] floating enable
+for_window [class="Gthumb"] floating enable, resize set 1200 800
+
+# Zoom floating toolbars
+for_window [title="^annotate_toolbar$"] floating enable
+for_window [title="^as_toolbar$"] floating enablefor_window [title="^annotate_toolbar$"] floating enable
+
+
+
 # Use gnome network manager
 exec --no-startup-id nm-applet
 # move focused workspace between monitors

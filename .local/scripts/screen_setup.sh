@@ -16,12 +16,12 @@ LAPTOP="eDP"
 if xrandr | grep -q "$HDMI connected"; then
     # Monitor externo 4K
     xrandr \
-        --output "$HDMI" --primary --mode 3840x2160 --rate 60 \
+        --output "$HDMI" --primary --mode 2560x1440 --rate 60 \
         --output "$LAPTOP" --auto --right-of "$HDMI"
 
-    echo "Xft.dpi: 144" | xrdb -merge
+    echo "Xft.dpi: 120" | xrdb -merge
 
-    POLYBAR_CONFIG="$HOME/.config/polybar/config-4k.ini"
+    POLYBAR_CONFIG="$HOME/.config/polybar/config-2k.ini"
 else
     # Solo laptop 1080p
     xrandr \
